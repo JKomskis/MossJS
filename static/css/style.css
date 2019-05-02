@@ -1,0 +1,141 @@
+body, html {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: #F5F5F5;
+    color: #212121;
+    margin: inherit;
+}
+
+h1 {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    color: #03a9f4;
+}
+
+a:hover {
+    color: #0288D1;
+}
+
+/*Not sure why, but putting the graph inside a div
+and making the div a flexbox prevent the vertical
+scrollbar when using height: 100%*/
+#graphDiv {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+#graph {
+    width: 100%;
+    font-size: 0.4rem;
+}
+
+.nodeShape {
+    stroke: #212121;
+    fill: #268bd2;
+    stroke-width: 0.05rem;
+}
+
+.nodeText {
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+.linkLine {
+    stroke: rgba(150, 150, 150, 0.3);
+    stroke-opacity: 0.6;
+    stroke-width: 3;
+}
+
+.edgeLabel {
+    text-anchor: middle;
+    /*fill: #999;*/
+}
+
+#options {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px rgba(150, 150, 150, 0.3) solid;
+    border-radius: 4px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.06);
+    background-color: inherit;
+    padding: 0.5rem;
+}
+
+.adjustmentButtons {
+    display: flex;
+    flex-direction: column;
+    line-height: 0px;
+}
+
+.adjustmentButtons img {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+#options > h4 {
+    text-align: center;
+}
+
+#options > div {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.25rem;
+    align-items: center;
+}
+
+#options > #quickOptions > * {
+    margin-right: 0.5rem;
+}
+
+#options > #quickOptions > label {
+    width: auto;
+}
+
+#options > #quickOptions > input {
+    width: auto;
+}
+
+#shortenNames {
+    width: auto;
+}
+
+#options > div > label {
+    width: 7rem;
+}
+
+#options > div > input {
+    width: 7rem;
+}
+
+#options > div > output {
+    justify-content: flex-end;
+    width: 1.5rem;
+}
+
+#title {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    text-align: right;
+}

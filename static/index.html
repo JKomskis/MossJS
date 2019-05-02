@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MossJS</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.min.js"></script>
+    <script type="text/javascript" src="js/moss.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.8/spectre.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="initGraph()">
+    <div id="title">
+        <h1>MossJS</h1>
+    </div>
+    <div id="options">
+        <h4>Options</h4>
+        <div id="quickOptions">
+            <label for="id">ID:</label>
+            <input type="text" id="id" oninput="inputId(value)">
+            <label for="shortenNames">Shorten Names:</label>
+            <input type="checkbox" id="shortenNames" onclick="clickShortenNames(this)">
+        </div>
+        <div>
+            <label for="lineThreshold">Minimum Lines:</label>
+            <input type="range" min="1" max="100" step="1" id="lineThreshold" onchange="changeLineThreshold(value)" oninput="inputLineThreshold(value)">
+            <output id="lineThresholdValue">40</output>
+            <div class="adjustmentButtons">
+                <button type="button" onclick="incrementLineThreshold()">
+                    <img src="icons/chevron-up-solid.svg">
+                </button>
+                <button type="button" onclick="decrementLineThreshold()">
+                        <img src="icons/chevron-down-solid.svg">
+                </button>
+            </div>
+        </div>
+        <div>
+            <label for="percentThreshold">Minimum Percent:</label>
+            <input type="range" min="1" max="100" step="1" id="percentThreshold" onchange="changePercentThreshold(value)" oninput="inputPercentThreshold(value)">
+            <output id="percentThresholdValue">40</output>
+            <div class="adjustmentButtons">
+                    <button type="button" onclick="incrementPercentThreshold()">
+                        <img src="icons/chevron-up-solid.svg">
+                    </button>
+                    <button type="button" onclick="decrementPercentThreshold()">
+                            <img src="icons/chevron-down-solid.svg">
+                    </button>
+                </div>
+        </div>
+    </div>
+    <!-- <div id="graph"></div> -->
+    <div id="graphDiv">
+        <svg id="graph"></svg>
+    </div>
+    <div id="footer">
+        <p>Joseph Komskis, 2019</p>
+        <p><a href="https://github.com/JKomskis/MossJS">Source</a></p>
+    </div>
+</body>
+</html>
