@@ -294,7 +294,7 @@ async function buildGraph(matches) {
 function getMatches(id) {
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "/api/results/" + id);
+        xhr.open("GET", "../api/results/" + id);
         xhr.responseType = "json"
         xhr.onload = () => {
             if (xhr.status >= 200 && xhr.status <= 300) {
@@ -395,7 +395,7 @@ function initGraph() {
 }
 
 function updateUrl() {
-    let newUrl = "/results/?";
+    let newUrl = window.location.pathname + "?";
     if(state.id !== defaultState.id)
         newUrl += "id=" + state.id;
     if(state.lineThreshold !== defaultState.lineThreshold)
