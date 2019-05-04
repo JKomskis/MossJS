@@ -14,63 +14,6 @@ function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 }
-/*
-Old Visjs code
-function buildGraph(matches) {
-    let names = new Set();
-    let nodes = new vis.DataSet();
-    let edges = new vis.DataSet();
-    let id = 1;
-    for(let match of matches) {
-        if(!names.has(match['firstFile'])) {
-            nodes.add({id: match['firstFile'], label: match['firstFile']})
-            id++;
-            names.add(match['firstFile']);
-        }
-        if(!names.has(match['secondFile'])) {
-            nodes.add({id: match['secondFile'], label: match['secondFile']})
-            id++;
-            names.add(match['secondFile']);
-        }
-
-        const percentMatched = Math.max(match['firstPercentMatched'], match['secondPercentMatched'])
-        const label = `${match['linesMatched']} (${percentMatched}%)`
-        edges.add({
-            from: match['firstFile'],
-            to: match['secondFile'],
-            label: label, 
-            percentMatched: percentMatched, 
-            linesMatched: match['linesMatched']
-        });
-    }
-
-    let nodeView = new vis.DataView(nodes, {
-        filter: function (item) {
-          return true;
-        }
-    });
-
-    let edgeView = new vis.DataView(edges, {
-        filter: function (item) {
-            return item.percentMatched >= 40;
-        }
-    });
-      
-
-    // create a network
-    let container = document.getElementById('graph');
-
-    // provide the data in the vis format
-    let data = {
-        nodes: nodes,
-        edges: edges
-    };
-    let options = {};
-
-    // initialize your network!
-    let network = new vis.Network(container, data, options);
-}
-*/
 
 function renderGraph() {
     let links = state.allLinks.filter(l => {
@@ -145,7 +88,6 @@ function renderGraph() {
         .force("charge", d3.forceManyBody().strength(-500))
         .force("x", d3.forceX())
         .force("y", d3.forceY())
-        //.force("center", d3.forceCenter(0, 0))
         .force("collide", collide);
     
     const link = g.select(".linkGroup")
@@ -153,14 +95,6 @@ function renderGraph() {
         .data(links)
         .join("line")
         .attr("class", "linkLine")
-    
-    // const edgepaths = g.append("g")
-    //     .selectAll(".edgePath")
-    //     .data(links)
-    //     .enter().append("path")
-    //     .attr("class", "edgePath")
-    //     .attr("d", d => 'M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y)
-    //     .attr("id", (d, i) => 'edgepath'+i)
     
     // http://bl.ocks.org/jhb/5955887
     const edgelabels = g.select(".edgeLabelGroup")
@@ -170,14 +104,8 @@ function renderGraph() {
         .attr("class", "edgeLabel")
         .attr("id", (d, i) => 'edgelabel'+i)
         .text(d => d.label);
-    // edgelabels.append("textPath")
-    //     .attr("xlink:href", (d, i) => "#edgepath"+i)
-    //     .attr("class", "textPath")
-    //     .attr("startOffset", "50%")
-    //     .text(d => d.label);
 
     const node = g.select(".nodeGroup")
-        //.attr("class", "nodeGroup")
         .selectAll(".node")
         .data(nodes)
         .join(
@@ -199,18 +127,6 @@ function renderGraph() {
                 return update;
             }
         ).call(drag(simulation));
-    // node.append("ellipse")
-    //     .attr("class", "nodeShape")
-    //     .attr("rx", d => d.id.length*2.25)
-    //     .attr("ry", 10);
-    // node.append("text")
-    //     .attr("class", "nodeText")
-    //     .text(d => d.id);
-    // node.append("circle")
-    //     .attr("stroke", "#2aa198")
-    //     .attr("fill", "#268bd2")
-    //     .attr("stroke-width", 0.5)
-    //     .attr("r", 5);
   
     simulation.on("tick", () => {
         link
@@ -220,29 +136,17 @@ function renderGraph() {
           .attr("y2", d => d.target.y);
   
         node
-          .attr("transform", d => "translate(" + d.x + "," + d.y + ")");
+          .attr("transform", d => "translate(" + d.x + "," + d.y + ")");     
 
-        // edgepaths.attr('d', function(d) { var path='M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y;
-        //                            return path});       
-
-        edgelabels.attr('transform',function(d,i){
+        edgelabels.attr('transform', d => {
             startX = Math.min(d.source.x, d.target.x);
             distX = Math.abs(d.source.x - d.target.x);
             xCoord = startX+distX/2;
             startY = Math.min(d.source.y, d.target.y);
             distY = Math.abs(d.source.y - d.target.y);
             yCoord = startY+distY/2;
-            //transform = "translate(" + startX+distX/2 + "," + startY+distY/2 + ")";
             transform = "translate(" + xCoord + "," + yCoord + ")";
-            if (d.target.x<d.source.x){
-                //bbox = this.getBBox();
-                //rx = bbox.x+bbox.width/2;
-                //ry = bbox.y+bbox.height/2;
-                return transform //+ ' rotate(180 '+rx+' '+ry+')';
-                }
-            else {
-                return transform //+ ' rotate(0)';
-                }
+            return transform;
         });
     });
 }
